@@ -12,12 +12,11 @@
 
   Written by Limor Fried/Ladyada for Adafruit Industries.  
   BSD license, all text above must be included in any redistribution
-  Modified by Keith M. Hughes to support multiple I2C buses.
  ****************************************************/
 
 #include "Adafruit_AM2315.h"
 
-Adafruit_AM2315::Adafruit_AM2315(TwoWire *w): wire{w} {
+Adafruit_AM2315::Adafruit_AM2315(my_i2c *w): wire{w} {
 }
 
 

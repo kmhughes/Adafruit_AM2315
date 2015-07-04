@@ -12,7 +12,6 @@
 
   Written by Limor Fried/Ladyada for Adafruit Industries.  
   BSD license, all text above must be included in any redistribution
-  Modified by Keith M. Hughes to support multiple I2C buses.
  ****************************************************/
 
 #if (ARDUINO >= 100)
@@ -20,14 +19,21 @@
 #else
  #include "WProgram.h"
 #endif
-#include "Wire.h"
+
+#if defined (CORE_TEENSY) && defined (__MK20DX256__)
+#include <i2c_t3.h>
+typedef i2c_t3 my_i2c;
+#else
+#include <Wire.h>
+typedef TwoWire my_i2c;
+#endif
 
 #define AM2315_I2CADDR       0x5C
 #define AM2315_READREG       0x03
 
 class Adafruit_AM2315 {
  public:
-  Adafruit_AM2315(TwoWire* w=&Wire);
+  Adafruit_AM2315(my_i2c* w=&Wire);
   boolean begin(void);
   float readTemperature(void);
   float readHumidity(void);
@@ -36,6 +42,6 @@ class Adafruit_AM2315 {
  private:
   boolean readData(void);
   float humidity, temp;
-  TwoWire *wire;
+  my_i2c *wire;
 };
 
